@@ -51,7 +51,9 @@ function App() {
   useEffect(() => {
     const pathName = window.location.pathname;
     const shortCode = pathName.slice(1);
-    redirectToUrl(shortCode);
+    console.log(shortCode);
+
+    if (shortCode.length > 1) redirectToUrl(shortCode);
   }, []);
 
   return (
