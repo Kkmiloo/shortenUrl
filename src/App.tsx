@@ -18,7 +18,7 @@ function App() {
     );
 
     setUrl('');
-    setUrlShorter(`http://localhost:5173/${data.shortCode}`);
+    setUrlShorter(`${window.location.href}${data.shortCode}`);
     console.log(url);
   };
 
@@ -51,8 +51,6 @@ function App() {
   useEffect(() => {
     const pathName = window.location.pathname;
     const shortCode = pathName.slice(1);
-    console.log(shortCode);
-
     if (shortCode.length > 1) redirectToUrl(shortCode);
   }, []);
 
