@@ -38,6 +38,8 @@ function App() {
     try {
       const postData = { longUrl: url };
 
+      console.log(host);
+
       const { data } = await axios.post(`${host}/api/shorten`, postData);
 
       setUrl('');
@@ -47,23 +49,6 @@ function App() {
       handleError(error);
     }
   };
-
-  const redirectToUrl = async (shortCode: string) => {
-    try {
-      const { data } = await axios.get(
-        `http://localhost:3000/api/shorten/${shortCode}`
-      );
-      window.location.href = `http://${data.longUrl}`;
-    } catch (error) {
-      handleError(error);
-    }
-  };
-
-  useEffect(() => {
-    const pathName = window.location.pathname;
-    const shortCode = pathName.slice(1);
-    if (shortCode.length > 1) redirectToUrl(shortCode);
-  }, []);
 
   return (
     <RootLayout>
