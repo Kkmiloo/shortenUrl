@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import RootLayout from './layouts/RootLayout';
 import axios, { AxiosError } from 'axios';
 import SubmitButton from './components/button/SubmitButton';
-import { host, port } from './common/env.config';
+import { host } from './common/env.config';
 
 function App() {
   const [urlShorter, setUrlShorter] = useState('');

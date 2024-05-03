@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { host, port } from '../../../common/env.config';
+import { host } from '../../../common/env.config';
 
 export default function Redirect() {
   const { shortCode } = useParams();
