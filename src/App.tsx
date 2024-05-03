@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import RootLayout from './layouts/RootLayout';
 import axios, { AxiosError } from 'axios';
