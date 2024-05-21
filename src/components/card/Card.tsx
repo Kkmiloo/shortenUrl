@@ -1,4 +1,3 @@
-import React from 'react';
 import CopyInput from '../inputs/CopyInput';
 import { ShortUrlResponse } from '../../interfaces/url.interface';
 
