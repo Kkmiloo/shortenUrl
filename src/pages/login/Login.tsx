@@ -16,7 +16,7 @@ export default function Login() {
         <div className='mb-4 text-left w-full ml-4 uppercase font-semibold'>
           <Link to={'/'}> Go back </Link>
         </div>
-        <h1 className='mb-12  font-extrabold text-4xl text-white '>
+        <h1 className='mb-12  font-extrabold text-4xl text-black dark:text-white '>
           Log in <span className='text-sky-500 text-4xl'>. </span>
         </h1>
         <form

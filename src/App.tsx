@@ -14,6 +14,8 @@ function App() {
   const [urlShorter, setUrlShorter] = useState<ShortUrlResponse[]>([]);
   const [url, setUrl] = useState('');
 
+  const [isPending, setIsPending] = useState(false);
+
   const [error, setError] = useState<AxiosError<any, any>>();
 
   const handleError = (error: unknown) => {
@@ -40,6 +42,7 @@ function App() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    setIsPending(true);
     try {
       const postData: CreateShortUrlRequest = { longUrl: url };
       const { data } = await axios.post<ShortUrlResponse>(
@@ -52,6 +55,8 @@ function App() {
       setUrl('');
     } catch (error) {
       handleError(error);
+    } finally {
+      setIsPending(false);
     }
   };
 
@@ -74,21 +79,32 @@ function App() {
   return (
     <RootLayout>
       <div className='max-w-6xl m-auto flex justify-center  flex-col'>
-        <div className='w-full mt-52 mb-16'>
-          {error && <p>{error.response?.data.message}</p>}
-          <form className='flex justify-center' onSubmit={handleSubmit}>
-            <input
-              className='w-full font-semibold  px-4 pr-12   text-sm peer  bg-zinc-700 outline-none rounded-xl focus:border-sky-500 focus:ring-1 focus:ring-sky-500'
-              type='text'
-              name='url  '
-              id='url'
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-            />
-            <div className='ml-4'>
-              <SubmitButton value='Short it' />
-            </div>
-          </form>
+        <div className='pt-16'>
+          <h1 className='text-5xl dark:text-white font-medium  text-center'>
+            {' '}
+            Create Links!{' '}
+            <span className='font-normal underline decoration-dotted underline-offset-8 decoration-sky-500'>
+              Shorten
+            </span>
+          </h1>
+          <div className='w-full  my-16'>
+            <form className='flex justify-center' onSubmit={handleSubmit}>
+              <input
+                className='w-full font-semibold  px-2 pl-5   text-sm peer bg-gray-50 border-gray-300 text-gray-500  focus:ring-blue-500 focus:border-blue-500  dark:bg-zinc-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-slate-200 dark:focus:ring-blue-500 dark:focus:border-blue-500  outline-none rounded-xl focus:ring-1 '
+                type='text'
+                name='url  '
+                id='url'
+                placeholder='Enter your url'
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+              />
+              <div className='ml-4'>
+                <SubmitButton value='Short it' />
+              </div>
+            </form>
+            {error && <p>{error.response?.data.message}</p>}
+            {isPending && <p>Loading...</p>}
+          </div>
         </div>
         <div>
           <div className='grid grid-cols-4 gap-3'>
