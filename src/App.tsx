@@ -1,12 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import RootLayout from './layouts/RootLayout';
 import axios, { AxiosError } from 'axios';
 import SubmitButton from './components/button/SubmitButton';
 import { host } from './common/env.config';
+import { Card } from './components/card/Card';
+import {
+  CreateShortUrlRequest,
+  ShortUrlResponse,
+} from './interfaces/url.interface';
 
 function App() {
-  const [urlShorter, setUrlShorter] = useState('');
+  const [urlShorter, setUrlShorter] = useState<ShortUrlResponse[]>([]);
   const [url, setUrl] = useState('');
 
   const [error, setError] = useState<AxiosError<any, any>>();
@@ -36,19 +41,35 @@ function App() {
     e.preventDefault();
 
     try {
-      const postData = { longUrl: url };
+      const postData: CreateShortUrlRequest = { longUrl: url };
+      const { data } = await axios.post<ShortUrlResponse>(
+        `${host}/api/shorten`,
+        postData
+      );
+      console.log(data);
 
-      console.log(host);
-
-      const { data } = await axios.post(`${host}/api/shorten`, postData);
-
+      setUrlShorter((oldUrl) => [...oldUrl, data]);
       setUrl('');
-      setUrlShorter(`${window.location.href}${data.shortCode}`);
-      console.log(url);
     } catch (error) {
       handleError(error);
     }
   };
+
+  useEffect(() => {
+    //save urlShorter to local storage
+    if (!urlShorter || urlShorter.length == 0) return;
+
+    localStorage.setItem('urlShorter', JSON.stringify(urlShorter));
+  }, [urlShorter]);
+
+  useEffect(() => {
+    //get urlShorter from local storage
+    const storedUrlShorter = localStorage.getItem('urlShorter');
+
+    if (storedUrlShorter) {
+      setUrlShorter(JSON.parse(storedUrlShorter));
+    }
+  }, []);
 
   return (
     <RootLayout>
@@ -70,7 +91,11 @@ function App() {
           </form>
         </div>
         <div>
-          <p>{urlShorter} </p>
+          <div className='grid grid-cols-4 gap-3'>
+            {urlShorter?.map((url) => (
+              <Card key={url.id} url={url} />
+            ))}
+          </div>
         </div>
       </div>
     </RootLayout>

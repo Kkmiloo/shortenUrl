@@ -4,7 +4,8 @@ import App from './App.tsx';
 import './index.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Login from './pages/login/Login.tsx';
-import Redirect from './pages/login/redirect/Redirect.tsx';
+import Redirect from './pages/redirect/Redirect.tsx';
+import Dashboard from './pages/admin/Dashboard.tsx';
 
 const router = createBrowserRouter([
   {
@@ -19,10 +20,12 @@ const router = createBrowserRouter([
     path: '/login',
     element: <Login />,
   },
+  {
+    path: '/admin',
+    element: <Dashboard />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <RouterProvider router={router} />
 );
