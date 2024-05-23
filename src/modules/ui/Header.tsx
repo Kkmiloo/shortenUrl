@@ -1,4 +1,5 @@
 import LinkButton from '../../components/button/LinkButton';
+import { DarkMode } from '../../components/button/DarkMode';
 
 export default function Header() {
   return (
@@ -8,8 +9,10 @@ export default function Header() {
           <p className='font-bold'> Shorten </p>
           <nav className='gap-4 ml-8'></nav>
         </div>
+
         <div>
-          <div>
+          <div className='flex gap-5 items-center'>
+            <DarkMode />
             <LinkButton value='Login' to='/login' />
           </div>
         </div>

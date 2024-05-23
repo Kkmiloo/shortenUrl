@@ -4,13 +4,13 @@ import SubmitButton from '../../components/button/SubmitButton';
 import PasswordInput from '../../components/inputs/PasswordInput';
 import { Form, Formik, FormikValues } from 'formik';
 import { LabelInput } from '../../components/inputs/LabelInput';
-import { MdEmail } from 'react-icons/md';
 import * as Yup from 'yup';
 
-export default function Login() {
-  const handleSubmit = (val: FormikValues) => {
-    console.log(val);
+export default function SignUp() {
+  const handleSubmit = (values: FormikValues) => {
+    console.log(values);
   };
+
   return (
     <div className='flex  items-center h-screen'>
       <div className='flex items-center flex-col m-auto mt-52 p-10 w-96'>
@@ -18,37 +18,38 @@ export default function Login() {
           <Link to={'/'}> Go back </Link>
         </div>
         <h1 className='mb-12  font-extrabold text-4xl text-black dark:text-white '>
-          Log in <span className='text-sky-500 text-4xl'>. </span>
+          Register <span className='text-sky-500 text-4xl'>. </span>
         </h1>
-
         <Formik
           initialValues={{
             email: '',
             password: '',
+            repeatPassword: '',
           }}
           onSubmit={handleSubmit}
           validationSchema={Yup.object({
             email: Yup.string().email('Invalid email').required('Required'),
-            password: Yup.string().required('Required'),
+            repeatPassword: Yup.string().required('Required'),
+            password: Yup.string().oneOf(
+              [Yup.ref('repeatPassword')],
+              'Passwords must match'
+            ),
           })}
         >
           {() => (
-            <Form className='mb-4'>
-              <LabelInput
-                name='email'
-                label='email'
-                iconComponent={<MdEmail />}
-              />
+            <Form>
+              <LabelInput label='email' name='email' />
               <PasswordInput label='password' name='password' />
-              <SubmitButton value='Iniciar Sesión' />
+              <PasswordInput label='repeat password' name='repeatPassword' />
+              <SubmitButton value='Register' />
             </Form>
           )}
         </Formik>
-        <div>
-          <Link to={'/register'} className='text-sky-500'>
-            Register
-          </Link>
-        </div>
+
+        <form
+          className='flex flex-col gap-4  text-white '
+          onSubmit={handleSubmit}
+        ></form>
       </div>
     </div>
   );

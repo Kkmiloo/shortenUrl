@@ -34,7 +34,7 @@ export default function CopyInput({ valueToCopy }: Props) {
             onClick={CopyToClipboard}
             onMouseEnter={() => setIsHovered((s) => !s)}
             onMouseLeave={() => setIsHovered((s) => !s)}
-            className='absolute end-2 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg p-2 inline-flex items-center justify-center'
+            className='absolute end-2 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg p-2 inline-flex items-center justify-center'
           >
             <span id='default-icon'>
               <svg
